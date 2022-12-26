@@ -5,7 +5,7 @@
 You can install the package via composer:
 
 ```bash
-composer require rabiloo/searchy
+composer require thuyld_rabiloo/searchy
 ```
 
 You can publish the config file with:
