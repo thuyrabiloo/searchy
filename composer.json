@@ -1,0 +1,68 @@
+{
+    "name": "rabiloo/searchy",
+    "description": "This is my package searchy",
+    "keywords": [
+        "rabiloo",
+        "laravel",
+        "modelsearchy"
+    ],
+    "homepage": "https://github.com/rabiloo/searchy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ThuyLD",
+            "email": "thuyhu9876@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "spatie/laravel-package-tools": "^1.13.0",
+        "illuminate/contracts": "^9.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rabiloo\\Searchy\\": "src",
+            "Rabiloo\\Searchy\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rabiloo\\Searchy\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rabiloo\\Searchy\\SearchyServiceProvider"
+            ],
+            "aliases": {
+                "ModelSearchy": "Rabiloo\\ModelSearchy\\Facades\\ModelSearchy"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
