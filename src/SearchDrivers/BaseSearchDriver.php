@@ -22,7 +22,7 @@ abstract class BaseSearchDriver implements SearchDriverInterface
     protected $withTrashed;
 
     /**
-     * @param null  $table
+     * @param null $table
      * @param array $searchFields
      * @param $relevanceFieldName
      * @param array $columns
@@ -72,7 +72,9 @@ abstract class BaseSearchDriver implements SearchDriverInterface
      */
     public function query($searchString)
     {
-        $this->searchString = substr(\DB::connection()->getPdo()->quote($searchString), 1, -1);
+        if ($searchString) {
+            $this->searchString = substr(\DB::connection()->getPdo()->quote($searchString), 1, -1);
+        }
 
         return $this;
     }
@@ -120,7 +122,7 @@ abstract class BaseSearchDriver implements SearchDriverInterface
 
         // If they included withTrashed flag then give them all records including soft deletes
         // Check to ensure the column exists before committing
-        if( ! $this->withTrashed && in_array('deleted_at', Schema::getColumnListing($this->table)) )
+        if (!$this->withTrashed && in_array('deleted_at', Schema::getColumnListing($this->table)))
             $this->query = $this->query->where('deleted_at', NULL);
 
         return $this->query
@@ -140,7 +142,7 @@ abstract class BaseSearchDriver implements SearchDriverInterface
         foreach ($searchFields as $searchField) {
             if (strpos($searchField, '::')) {
 
-                $concatString = implode(', ', array_map( [$this, 'sanitizeColumnName'] , explode('::', $searchField)));
+                $concatString = implode(', ', array_map([$this, 'sanitizeColumnName'], explode('::', $searchField)));
 
                 $query[] = $this->buildSelectCriteria("CONCAT({$concatString})");
             } else {
@@ -148,7 +150,7 @@ abstract class BaseSearchDriver implements SearchDriverInterface
             }
         }
 
-        return \DB::raw( implode(' + ', $query) . ' AS ' . $this->relevanceFieldName);
+        return \DB::raw(implode(' + ', $query) . ' AS ' . $this->relevanceFieldName);
     }
 
 
@@ -198,6 +200,6 @@ abstract class BaseSearchDriver implements SearchDriverInterface
 
     private function coalesce($field)
     {
-      return "COALESCE($field, '')";
+        return "COALESCE($field, '')";
     }
 }
