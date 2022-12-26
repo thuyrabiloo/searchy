@@ -59,7 +59,7 @@
                 "Rabiloo\\Searchy\\SearchyServiceProvider"
             ],
             "aliases": {
-                "ModelSearchy": "Rabiloo\\ModelSearchy\\Facades\\ModelSearchy"
+                "Searchy": "Rabiloo\\Searchy\\Facades\\Searchy"
             }
         }
     },
