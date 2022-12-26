@@ -9,33 +9,33 @@ trait Searchable
 {
     abstract function searchableColumns(): array;
 
-    public function scopeSearch(Builder $builder, string $keyword, string|array $columns = '')
+    public function scopeSearch(Builder $builder, string|null $keyword = null, string|array $columns = '')
     {
         $driver = config('searchy.default');
         return $this->search($keyword, $columns, $driver)->getQuery();
     }
 
-    public function scopeFuzzySearch(Builder $builder, string $keyword, string|array $columns = '')
+    public function scopeFuzzySearch(Builder $builder, string|null $keyword = null, string|array $columns = '')
     {
         return $this->search($keyword, $columns, 'fuzzy')->getQuery();
     }
 
-    public function scopeUFuzzySearch(Builder $builder, string $keyword, string|array $columns = '')
+    public function scopeUFuzzySearch(Builder $builder, string|null $keyword = null, string|array $columns = '')
     {
         return $this->search($keyword, $columns, 'ufuzzy')->getQuery();
     }
 
-    public function scopeSimpleSearch(Builder $builder, string $keyword, string|array $columns = '')
+    public function scopeSimpleSearch(Builder $builder, string|null $keyword = null, string|array $columns = '')
     {
         return $this->search($keyword, $columns, 'simple')->getQuery();
     }
 
-    public function scopeLevenshteinSearch(Builder $builder, string $keyword, string|array $columns = '')
+    public function scopeLevenshteinSearch(Builder $builder, string|null $keyword = null, string|array $columns = '')
     {
         return $this->search($keyword, $columns, 'levenshtein')->getQuery();
     }
 
-    private function search(string $keyword, string|array $columns = '', string $driver = '')
+    private function search(string|null $keyword = null, string|array $columns = '', string $driver = '')
     {
         $builder = new SearchyBuilder(app('config'));
         if (!$columns) {
